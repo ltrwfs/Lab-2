@@ -47,13 +47,20 @@ if __name__ == '__main__':
 
         with open(OUT_PATH, 'w') as out:
             rand_list = set()
-            while len(rand_list) < 20:
+            counter = 0
+            while counter < 20:
                 rand_number = random.randint(0, len(books))
-                rand_list.add(rand_number)
-                if books[rand_number]['Автор (ФИО)'] == '':
-                    out.write(f'{books[rand_number]['Название']}'
-                              +f'- {years[rand_number]}\n')
-                else:
-                    out.write(f'{books[rand_number]['Автор (ФИО)']}. '
-                              +f'{books[rand_number]['Название']} - '
-                              +f'{years[rand_number]}\n')
+                if not(rand_number in rand_list):
+                    if books[rand_number]['Автор (ФИО)'] == '':
+                        counter = len(rand_list) + 1
+                        out.write(f'{counter}. '
+                                  +f'"{books[rand_number]['Название']}" - '
+                                  +f'{years[rand_number]}\n')
+                        rand_list.add(rand_number)
+                    else:
+                        counter = len(rand_list) + 1
+                        out.write(f'{counter}. '
+                                  +f'{books[rand_number]['Автор (ФИО)']}. '
+                                  +f'"{books[rand_number]['Название']}" - '
+                                  +f'{years[rand_number]}\n')
+                        rand_list.add(rand_number)
