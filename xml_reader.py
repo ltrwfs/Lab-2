@@ -12,8 +12,8 @@ def get_objects(elements):
                         name = child.firstChild.data
                 if child.tagName == 'Nominal':
                     if child.firstChild.nodeType == 3:
-                        nominal = float(child.firstChild.data)
-        if nominal == 1:
+                        nominal = child.firstChild.data
+        if nominal == '1':
             list.append(name)
     return(list)
 
