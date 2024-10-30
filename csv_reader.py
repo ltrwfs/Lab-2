@@ -30,19 +30,23 @@ if __name__ == '__main__':
         print('Количество записей, y которых в поле Название '
               +'строка длиннее 30 символов:', ans)
         
-        author = input('Введите имя автора: ')
+        author_filter = input('Введите имя автора: ')
         print('Найденные записи:')
         counter = 1
         years = list()
+        years_filter =  ['2014', '2016', '2017']
         for element in books:
             date, time = element['Дата поступления'].split()
             year = date[-4:]
             years.append(year)
-            if (((author in element['Автор']) 
-                or (author in element['Автор (ФИО)']))
-                and (year in ['2014', '2016', '2017'])):
-                print(f'  {counter}. {element['Автор (ФИО)']} '
-                      +f'"{element['Название']}", {year}')
+            author = element['Автор']
+            author_fio = element['Автор (ФИО)']
+            book_name = element['Название']
+            if (((author_filter in author) 
+                or (author_filter in author_fio))
+                and (year in years_filter)):
+                print(f'  {counter}. {author_fio} '
+                      +f'"{book_name}", {year}')
                 counter += 1
 
         with open(OUT_PATH, 'w') as out:
@@ -50,17 +54,19 @@ if __name__ == '__main__':
             counter = 0
             while counter < 20:
                 rand_number = random.randint(0, len(books))
+                author_fio = books[rand_number]['Автор (ФИО)']
+                book_name = books[rand_number]['Название']
                 if not(rand_number in rand_list):
-                    if books[rand_number]['Автор (ФИО)'] == '':
+                    if author_fio == '':
                         counter = len(rand_list) + 1
                         out.write(f'{counter}. '
-                                  +f'"{books[rand_number]['Название']}" - '
+                                  +f'"{book_name}" - '
                                   +f'{years[rand_number]}\n')
                         rand_list.add(rand_number)
                     else:
                         counter = len(rand_list) + 1
                         out.write(f'{counter}. '
-                                  +f'{books[rand_number]['Автор (ФИО)']}. '
-                                  +f'"{books[rand_number]['Название']}" - '
+                                  +f'{author_fio}. '
+                                  +f'"{book_name}" - '
                                   +f'{years[rand_number]}\n')
                         rand_list.add(rand_number)
