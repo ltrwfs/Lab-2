@@ -42,8 +42,7 @@ if __name__ == '__main__':
             author = element['Автор']
             author_fio = element['Автор (ФИО)']
             book_name = element['Название']
-            if (((author_filter in author) 
-                or (author_filter in author_fio))
+            if (((author_filter in author) or (author_filter in author_fio))
                 and (year in years_filter)):
                 print(f'  {counter}. {author_fio} '
                       +f'"{book_name}", {year}')
